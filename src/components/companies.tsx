@@ -4,13 +4,12 @@ import { RootState } from "../reduxStore/store";
 import { chechAllCompany, checkCompany, companyNameChange, companyAdressChange, deleteCompany, resetCheckedCompanies } from "../reduxStore/tablesReducer.ts";
 import s from './companies.module.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
-const CompaniesList= () => {
+const CompaniesList = () => {
     const companies = useSelector((store: RootState) => store.tables)
     const [count, setCount] = useState(45)
     const dispatch = useDispatch()
-
     const onChecked = useCallback((e: React.FormEvent<HTMLInputElement>) => {
-        dispatch(checkCompany(e.currentTarget.tabIndex))
+        dispatch(checkCompany([e.currentTarget.tabIndex, e.currentTarget.checked]))
     }, [])
     const onDelete = (e) => {
         dispatch(deleteCompany(e.currentTarget.id))
@@ -28,14 +27,14 @@ const CompaniesList= () => {
     }
     const fetchMoreData = () => {
         setTimeout(() => {
-            setCount(count => count + 10)
-        }, 0);
+        setCount(count => count + 10)
+        }, 200);
     };
     let scrolledCompanies = companies.companies.filter((_, index) => index < count)
 
     return <div>
         <div className={s.toolsBlock}>
-            <div> <input type="checkbox" checked={companies.allCompaniesChecked} onChange={onAllChecked} tabIndex={scrolledCompanies.length} /></div>
+            <div className={s.checkBox}> <input type="checkbox" checked={companies.allCompaniesChecked} onChange={onAllChecked} tabIndex={scrolledCompanies.length} /></div>
             <div>  Check ALL</div>
             <div>  <button onClick={onDelete}>Удалить</button></div>
         </div>
@@ -50,14 +49,13 @@ const CompaniesList= () => {
                 dataLength={scrolledCompanies.length}
                 next={fetchMoreData}
                 hasMore={true}
-                loader={<h4>Loading...</h4>}
+                loader={<h4></h4>}
                 style={{ overflow: 'hidden' }}
-                scrollThreshold={1}
             >
                 {scrolledCompanies.map((el, index) =>
                     <div key={el.id} className={el.isSelected ? s.activeItem : s.tableItem}>
                         <div className={s.checkBox}><input type="checkbox" id={el.id} tabIndex={index} checked={el.isSelected} onChange={onChecked} /></div>
-                        <input onChange={onNameTextChange} tabIndex={index} className={s.name} value={el.name} />
+                        <input onChange={onNameTextChange} tabIndex={index} className={s.name} id={el.id} value={el.name} />
                         <input onChange={onAdressTextChange} tabIndex={index} className={s.adress} value={el.adress} />
                         <div id={el.id} className={s.workersCount}>{el.workers.length}</div>
                     </div>)}

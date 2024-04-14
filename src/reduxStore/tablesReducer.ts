@@ -13,10 +13,10 @@ export type companiesType = {
 
 }
 export type workersType = {
-    isSelected: boolean,
-    lastName: string,
-    firstName: string,
-    position: string,
+    isSelected?: boolean,
+    lastName?: string,
+    firstName?: string,
+    position?: string,
     id: string,
     name?: string
 }
@@ -71,7 +71,16 @@ const tablesPageSliceReducer = createSlice({
             }
         },
         checkCompany: (state, action: PayloadAction<any>) => {
-            state.companies[action.payload].isSelected = !state.companies[action.payload].isSelected
+            console.log('payload - ', action.payload[0])
+            if (action.payload[1] === true) {
+                state.companies[action.payload[0]].isSelected = true
+                state.checkedCompanies.push(action.payload[0])
+            }
+            else {
+                state.companies[action.payload[0]].isSelected = false
+                state.checkedCompanies = state.checkedCompanies.filter(el => el !== action.payload[0])
+            }
+
         },
         checkWorker: (state, action: PayloadAction<string>) => {
             // const find = state.companies.workers.find(el => el.id === action.payload)
@@ -105,6 +114,7 @@ const tablesPageSliceReducer = createSlice({
             } else {
                 for (let i = 0; i <= action.payload - 1; ++i) {
                     state.companies[i].isSelected = false
+                    state.checkedCompanies = []
                 }
             }
         },

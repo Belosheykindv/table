@@ -8,11 +8,14 @@ function App() {
 
   return (
     <div className={s.mainApp} >
-      <h3> тестовое задания</h3>
+      <div className={s.header}>
+        <h3> Тестовое задания</h3>
+      </div>
       <div className={s.addsBlock}>
         <div className={s.addCompany}><AddCompanyForm /></div>
         <div className={s.addWorker}><AddWorker /></div>
       </div>
+
       <div className={s.tablesBlock}>
         <div className={s.companiesList}>
           <CompaniesList />

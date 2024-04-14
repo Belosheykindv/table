@@ -1,0 +1,35 @@
+.mainApp h3 {
+  text-align: center;
+}
+
+.addsBlock {
+  display: flex;
+  justify-content: center;
+  gap: 50px
+}
+
+.addCompany {
+  display: flex;
+  width: 650px;
+  justify-content: center;
+}
+
+.addWorker {
+  width: 650px;
+  display: flex;
+  justify-content: center;
+}
+
+.tablesBlock {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+}
+
+.companiesList {
+  width: 650px;
+}
+
+.workersList {
+  width: 650px;
+}

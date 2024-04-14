@@ -1,0 +1,117 @@
+.tableItem {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.activeItem {
+    color: rgb(255, 6, 6);
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+
+.activeItem input {
+    color: rgb(255, 0, 0);
+}
+
+
+.checkBox {
+    scale: 1.6;
+}
+
+.header {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    justify-content: space-between;
+    border: 2px solid green;
+}
+
+.header input {
+    scale: 0;
+}
+
+.headerName {
+    width: 300px;
+    text-align: center;
+    align-content: center;
+ 
+}
+
+.headerAdress {
+    width: 200px;
+    text-align: center;
+    align-content: center;
+
+}
+
+.headerWorkers {
+    width: 100px;
+    text-align: center;
+    align-content: center;
+
+}
+
+.headerWName {
+    width: 200px;
+    text-align: center;
+    align-content: center;
+
+}
+
+.headerWAdress {
+    width: 200px;
+    text-align: center;
+    align-content: center;
+
+}
+
+.headerWWorkers {
+    width: 100px;
+    text-align: center;
+    align-content: center;
+}
+
+.name {
+    width: 300px;
+    border: 1px solid black;
+}
+
+.adress {
+    width: 200px;
+    border: 1px solid black;
+}
+
+.workersCount {
+    width: 100px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.nameW {
+    width: 200px;
+    border: 1px solid black;
+}
+
+.adressW {
+    width: 200px;
+    border: 1px solid black;
+}
+
+.workersCountW {
+    width: 100px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.toolsBlock {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px;
+}
+
+.toolsBlock input {
+    scale: 1.8;
+}

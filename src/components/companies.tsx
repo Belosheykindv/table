@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, JSXElementConstructor, Component } from "react";
-import { UseSelector, useDispatch, useSelector } from "react-redux";
+import React, { useState} from "react";
+import {  useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reduxStore/store";
 import { chechAllCompany, checkCompany, companyNameChange, companyAdressChange, deleteCompany, resetCheckedCompanies } from "../reduxStore/tablesReducer.ts";
 import s from './companies.module.css'
@@ -8,11 +8,11 @@ const CompaniesList = () => {
     const companies = useSelector((store: RootState) => store.tables)
     const [count, setCount] = useState(45)
     const dispatch = useDispatch()
-    const onChecked = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    const onChecked = (e: React.FormEvent<HTMLInputElement>) => {
         dispatch(checkCompany([e.currentTarget.tabIndex, e.currentTarget.checked]))
-    }, [])
-    const onDelete = (e) => {
-        dispatch(deleteCompany(e.currentTarget.id))
+    }
+    const onDelete = () => {
+        dispatch(deleteCompany())
         dispatch(resetCheckedCompanies())
     }
     const onAllChecked = (e: React.FormEvent<HTMLInputElement>) => {
@@ -27,15 +27,21 @@ const CompaniesList = () => {
     }
     const fetchMoreData = () => {
         setTimeout(() => {
-        setCount(count => count + 10)
-        }, 200);
+            setCount(count => count + 10)
+        }, 400);
     };
-    let scrolledCompanies = companies.companies.filter((_, index) => index < count)
+    let scrolledCompanies = companies.companies.filter((_, index) => index < count).map((el, index) =>
+        <div key={el.id} className={el.isSelected ? s.activeItem : s.tableItem}>
+            <div className={s.checkBox}><input type="checkbox" id={el.id} tabIndex={index} checked={el.isSelected} onChange={onChecked} /></div>
+            <input onChange={onNameTextChange} tabIndex={index} className={s.name} id={el.id} value={el.name} />
+            <input onChange={onAdressTextChange} tabIndex={index} className={s.adress} value={el.adress} />
+            <div id={el.id} className={s.workersCount}>{el.workers.length}</div>
+        </div>)
 
     return <div>
         <div className={s.toolsBlock}>
-            <div className={s.checkBox}> <input type="checkbox" checked={companies.allCompaniesChecked} onChange={onAllChecked} tabIndex={scrolledCompanies.length} /></div>
-            <div>  Check ALL</div>
+            <div style={{ opacity: '0' }}> <input type="checkbox" checked={companies.allCompaniesChecked} onChange={onAllChecked} tabIndex={scrolledCompanies.length} id={'checkAllBox'} /></div>
+            <div><label htmlFor="checkAllBox">Check ALL</label>  </div>
             <div>  <button onClick={onDelete}>Удалить</button></div>
         </div>
         <div>
@@ -49,16 +55,10 @@ const CompaniesList = () => {
                 dataLength={scrolledCompanies.length}
                 next={fetchMoreData}
                 hasMore={true}
-                loader={<h4></h4>}
+                loader={<h4>...Loading...</h4>}
                 style={{ overflow: 'hidden' }}
             >
-                {scrolledCompanies.map((el, index) =>
-                    <div key={el.id} className={el.isSelected ? s.activeItem : s.tableItem}>
-                        <div className={s.checkBox}><input type="checkbox" id={el.id} tabIndex={index} checked={el.isSelected} onChange={onChecked} /></div>
-                        <input onChange={onNameTextChange} tabIndex={index} className={s.name} id={el.id} value={el.name} />
-                        <input onChange={onAdressTextChange} tabIndex={index} className={s.adress} value={el.adress} />
-                        <div id={el.id} className={s.workersCount}>{el.workers.length}</div>
-                    </div>)}
+                {scrolledCompanies}
             </InfiniteScroll>
 
         </div>

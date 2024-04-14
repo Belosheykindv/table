@@ -11,8 +11,7 @@ const AddWorker = () => {
         dispatch(addWorker(data))
         reset()
     }
-    console.log('length - ', selectedWorkers.checkedCompanies.length)
-    console.log('bool - ', selectedWorkers.allCompaniesChecked)
+
     return <div>
         <form onSubmit={handleSubmit(onSubmit)} >
             <input placeholder="First Name" {...register("firstName")} required={true}></input>

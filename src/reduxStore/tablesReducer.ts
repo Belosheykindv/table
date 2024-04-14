@@ -1,9 +1,8 @@
 
 import { createSlice } from "@reduxjs/toolkit"
-import { PayloadAction, current } from "@reduxjs/toolkit"
+import { PayloadAction } from "@reduxjs/toolkit"
 import { v1 } from "uuid"
 import { companiesMockData } from "../miscData/companiesMockData.ts"
-import { workersMockData } from "../miscData/workersMockData.ts"
 export type companiesType = {
     isSelected?: boolean,
     name: string,
@@ -71,7 +70,6 @@ const tablesPageSliceReducer = createSlice({
             }
         },
         checkCompany: (state, action: PayloadAction<any>) => {
-            console.log('payload - ', action.payload[0])
             if (action.payload[1] === true) {
                 state.companies[action.payload[0]].isSelected = true
                 state.checkedCompanies.push(action.payload[0])
@@ -83,10 +81,9 @@ const tablesPageSliceReducer = createSlice({
 
         },
         checkWorker: (state, action: PayloadAction<string>) => {
-            // const find = state.companies.workers.find(el => el.id === action.payload)
             let find;
             for (let i = 0; i <= state.companies.length - 1; ++i) {
-                find = state.companies[i].workers.find(el => el.id == action.payload)
+                find = state.companies[i].workers.find(el => el.id === action.payload)
                 if (find) {
                     state.checkedWorkers.push(action.payload)
                     find.isSelected = !find.isSelected
@@ -101,7 +98,6 @@ const tablesPageSliceReducer = createSlice({
                     if (state.allWorkersChecked === true) {
                         state.companies[i].workers.forEach(el => el.isSelected = true)
                     } else { state.companies[i].workers.forEach(el => el.isSelected = false) }
-                    console.log('render')
                 }
             }
         },
@@ -119,7 +115,7 @@ const tablesPageSliceReducer = createSlice({
             }
         },
         deleteCompany: (state) => {
-            let newArr = state.companies.filter(el => el.isSelected === false)
+            let newArr = state.companies.filter((el) => el.isSelected === false)
             return { ...state, companies: [...newArr], allCompaniesChecked: false }
         },
         deleteWorker: (state) => {
@@ -147,7 +143,7 @@ const tablesPageSliceReducer = createSlice({
             state.companies[action.payload[0]].adress = action.payload[1]
         },
         workerFirstNameChange: (state, action: PayloadAction<string[]>) => {
-            let selectedWorker
+            let selectedWorker: workersType | undefined;
             for (let i = 0; i <= state.companies.length - 1; ++i) {
                 selectedWorker = state.companies[i].workers.find(el => el.id === action.payload[0])
                 if (selectedWorker) {

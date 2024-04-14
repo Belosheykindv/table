@@ -121,6 +121,7 @@
     margin: 10px;
 }
 
-/* .toolsBlock input {
-    scale: 1.8;
-} */
+.toolsBlock label:hover {
+    cursor: pointer;
+
+}

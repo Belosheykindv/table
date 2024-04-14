@@ -6,7 +6,6 @@ const AddCompanyForm = () => {
     const dispatch = useDispatch()
     const { control, handleSubmit, reset, register, formState: { errors } } = useForm<companiesType>({ mode: "onChange" })
     const onSubmit = (data: companiesType) => {
-        console.log('data -- ', data)
         dispatch(addCompany(data))
         reset()
     }
@@ -14,7 +13,6 @@ const AddCompanyForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} >
             <input placeholder="Name" {...register("name")} required={true}></input>
             <input placeholder="Adress" {...register("adress")} required={true}></input>
-            {/* <input placeholder="WorkersCount" {...register("workersCout")} required={true}></input> */}
             <button type='submit'> Добавить</button>
         </form>
     </div >
